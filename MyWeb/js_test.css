@@ -1,0 +1,40 @@
+body{margin: 0px;
+font-family: 华文仿宋;
+color: white;
+font-size: 18px;}
+.one{margin: 0px;
+    width: 1210px;
+height: 110px;}
+.a{ margin: 0 5px;
+    text-align: center;
+    height: 100px;
+    width: 300px;
+    float: left;
+    background-color: coral;}
+.b{ margin:0px;text-align: center;
+    height: 100px;
+    width: 900px;
+    float: right;
+    background-color:rebeccapurple;}
+.c{margin: 0px 3px;
+width: 1210px;
+height: 80px;
+background-color: brown;}
+.two{margin:3px;
+height:600px;
+width: 1210px;}
+.d{margin: 0;
+    float: left;
+height: 600px;
+width: 200px;
+background-color: darkgoldenrod;}
+.e{margin: 0;
+height: 600px;
+width: 505px;
+    float: left;
+background-color: darkslategrey;}
+.f{margin: 0;
+height: 600px;
+width: 505px;
+    float: left;
+background-color: yellow;}
