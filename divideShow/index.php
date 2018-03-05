@@ -32,6 +32,9 @@
             border-color: #ff8b3d;
             background-color: #ff8b3d;
         }
+        .DBdata{
+            text-align: center;
+        }
     </style>
 </head>
 
@@ -41,31 +44,50 @@ include_once 'divide.php';
 //total数据库中的总条数 eachNum 每一页显示的条数
 $eachNum=9;
 if (isset($_GET['page'])){
-    $cur=$_GET['page'];
+    $cur=(int)$_GET['page'];
 }
 else $cur=1;
-
-$start=($cur-1)*9;
-//连接数据库
-$db=new mysqli('localhost','root','','test');
-if (mysqli_connect_errno()) {
-    printf("Connect failed: %s\n", mysqli_connect_error());
+//防止误传参数
+if(!is_int($cur)){
+    var_dump($cur);
+    echo "</br>页面错误，请输入正确的网址</br>";
     exit();
 }
-//
-$sq="select * from testdivide ";
-$reslut=$db->query($sq);
-$total=$reslut->num_rows;
+else{
 
-$sq="select * from testdivide limit  $start,9";
-$reslut=$db->query($sq);
+
+
+    $start=($cur-1)*9;
+//连接数据库
+    $db=new mysqli('localhost','root','','test');
+    if (mysqli_connect_errno()) {
+        printf("Connect failed: %s\n", mysqli_connect_error());
+        exit();
+    }
+//
+    $sq="select * from testdivide ";
+    $reslut=$db->query($sq);
+    $total=$reslut->num_rows;
+
+    if ($cur<=0||$cur>(int)ceil((float)$total/$eachNum)){
+        echo "页面不存在</br>";
+        exit();
+    }else{
+        $sq="select * from testdivide limit  $start,9";
+        $reslut=$db->query($sq);
 //echo $total."</br>";
-for ($i=0;$i<$eachNum&&($row=$reslut->fetch_row());$i++){
-    echo $row[1]."----".$row[2]."------".$row[3]."</br>";
+        echo "<div class='DBdata'>";
+        for ($i=0;$i<$eachNum&&($row=$reslut->fetch_row());$i++){
+            echo $row[1]."----".$row[2]."------".$row[3]."</br>";
+        }
+        $reslut->close();
+        $showPage=new showPages($total,$eachNum,$cur);
+        echo  $showPage->echoPage();
+        echo "</div>";
+    }
 }
-$reslut->close();
-$showPage=new showPages($total,$eachNum,$cur);
-echo  $showPage->echoPage();
+
+
 ?>
 </body>
 </html>
